@@ -8,6 +8,9 @@ import {
   operacionalAPI,
   automacoesAPI
 } from '../services/api'
+import { getSnapshot as getMockSnapshot } from '../store/mockBackend'
+
+const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true'
 
 const SyncContext = createContext({})
 
@@ -94,7 +97,7 @@ export function SyncProvider({ children, intervalMs = 15000 }) {
   const runSync = useCallback(async () => {
     setIsSyncing(true)
     try {
-      const snap = await fetchSnapshot()
+      const snap = USE_MOCK ? getMockSnapshot() : await fetchSnapshot()
       applySnapshot(snap)
     } catch (err) {
       // Se não tiver token ainda (antes do login) é normal falhar silenciosamente

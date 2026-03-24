@@ -5,6 +5,13 @@ import { Lock, Mail, Loader2 } from 'lucide-react'
 import { useToast } from '../../contexts/ToastContext'
 import { authAPI } from '../../services/api'
 
+const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true'
+const MOCK_USERS = [
+  { email: 'admin@linkup3.com',    senha: 'linkup3@2026', nome: 'Administrador LinkUp³', role: 'admin' },
+  { email: 'analista@linkup3.com', senha: 'linkup3@2026', nome: 'Ana Lima',               role: 'analyst' },
+  { email: 'usuario@linkup3.com',  senha: 'linkup3@2026', nome: 'Pedro Silva',            role: 'user' },
+]
+
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -42,6 +49,22 @@ export default function Login() {
     }
 
     setLoading(true)
+
+    if (USE_MOCK) {
+      const user = MOCK_USERS.find(u => u.email === email && u.senha === password)
+      if (!user) {
+        setError('Credenciais inválidas')
+        toast.error('E-mail ou senha incorretos')
+        setLoading(false)
+        return
+      }
+      const fakeToken = `mock.${btoa(JSON.stringify({ email: user.email, name: user.nome, role: user.role }))}.signature`
+      localStorage.setItem('authToken', fakeToken)
+      localStorage.setItem('linkup_user', JSON.stringify({ email: user.email, nome: user.nome, role: user.role }))
+      toast.success('Login realizado com sucesso! Redirecionando...')
+      setTimeout(() => navigate('/'), 600)
+      return
+    }
 
     try {
       // Chama a API real — POST /auth/login
