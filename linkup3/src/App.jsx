@@ -8,7 +8,6 @@ import { ThemeProvider } from './contexts/ThemeContext'
 import { SyncProvider } from './contexts/SyncContext'
 import ErrorBoundary from './components/ErrorBoundary'
 import Sidebar from './components/layout/Sidebar'
-import Navbar from './components/layout/Navbar'
 import Topbar from './components/topbar/Topbar'
 import Breadcrumbs from './components/layout/Breadcrumbs'
 import PageMap from './components/layout/PageMap'
@@ -99,7 +98,6 @@ function AppLayout() {
   return (
     <div className="min-h-screen bg-neutral-50">
       {!isLoginPage && <Sidebar />}
-      {!isLoginPage && <Navbar />}
       {!isLoginPage && <Topbar currentUser={currentUser} onLogout={handleLogout} />}
       {isLoginPage ? (
         <PageTransitions />
