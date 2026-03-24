@@ -1,0 +1,191 @@
+/* ============================================================================
+   THEME SYSTEM - FASE D4
+   CSS Variables globais para tema Light/Dark com persistência
+   ============================================================================ */
+
+/* ==========================================================================
+   LIGHT THEME (PADRÃO)
+   ========================================================================== */
+:root[data-theme="light"] {
+  /* Cores de superfície */
+  --color-background: #f8f9fa;
+  --color-surface: #ffffff;
+  --color-card: #ffffff;
+  
+  /* Cores de texto */
+  --color-text-primary: #1b1b1b;
+  --color-text-secondary: #495057;
+  --color-text-muted: #6c757d;
+  
+  /* Cores de borda */
+  --color-border: #e4e7eb;
+  --color-border-light: #f1f3f5;
+  
+  /* Sombras */
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-strong: 0 8px 24px rgba(0, 0, 0, 0.12);
+  
+  /* Cores semânticas */
+  --primary: #0077b6;
+  --primary-hover: #005f92;
+  --primary-light: #caf0f8;
+  
+  --danger: #d90429;
+  --danger-hover: #b70324;
+  --danger-light: #fce8ec;
+  
+  --warning: #f4a261;
+  --warning-hover: #e89350;
+  --warning-light: #fef4ec;
+  
+  --success: #2a9d8f;
+  --success-hover: #24877b;
+  --success-light: #e8f5f3;
+  
+  --info: #0077b6;
+  --info-hover: #005f92;
+  --info-light: #e6f3f9;
+  
+  /* Cores neutras */
+  --neutral-50: #f8f9fa;
+  --neutral-100: #f1f3f5;
+  --neutral-200: #e9ecef;
+  --neutral-300: #dee2e6;
+  --neutral-400: #ced4da;
+  --neutral-500: #adb5bd;
+  --neutral-600: #6c757d;
+  --neutral-700: #495057;
+  --neutral-800: #343a40;
+  --neutral-900: #212529;
+}
+
+/* ==========================================================================
+   DARK THEME
+   ========================================================================== */
+:root[data-theme="dark"] {
+  /* Cores de superfície */
+  --color-background: #0e1117;
+  --color-surface: #161b22;
+  --color-card: #1c2128;
+  
+  /* Cores de texto */
+  --color-text-primary: #f0f6fc;
+  --color-text-secondary: #9ca3af;
+  --color-text-muted: #6e7681;
+  
+  /* Cores de borda */
+  --color-border: #2d333b;
+  --color-border-light: #21262d;
+  
+  /* Sombras */
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-strong: 0 8px 24px rgba(0, 0, 0, 0.6);
+  
+  /* Cores semânticas */
+  --primary: #4da3ff;
+  --primary-hover: #6bb3ff;
+  --primary-light: #1a2840;
+  
+  --danger: #ff6b6b;
+  --danger-hover: #ff8585;
+  --danger-light: #3d1f1f;
+  
+  --warning: #ffb562;
+  --warning-hover: #ffc47d;
+  --warning-light: #3d2e1f;
+  
+  --success: #6cd9b3;
+  --success-hover: #86e0c1;
+  --success-light: #1f3d36;
+  
+  --info: #5eb3e0;
+  --info-hover: #78c0e5;
+  --info-light: #1f2e3d;
+  
+  /* Cores neutras */
+  --neutral-50: #21262d;
+  --neutral-100: #2d333b;
+  --neutral-200: #373e47;
+  --neutral-300: #444c56;
+  --neutral-400: #545d68;
+  --neutral-500: #636e7b;
+  --neutral-600: #768390;
+  --neutral-700: #9ca3af;
+  --neutral-800: #c9d1d9;
+  --neutral-900: #f0f6fc;
+}
+
+/* ==========================================================================
+   TRANSIÇÕES SUAVES
+   ========================================================================== */
+* {
+  transition: background-color 0.2s ease, 
+              color 0.2s ease, 
+              border-color 0.2s ease,
+              box-shadow 0.2s ease;
+}
+
+/* Prevenir transição em animações do Framer Motion */
+[data-framer-motion] {
+  transition: none !important;
+}
+
+/* ==========================================================================
+   APLICAÇÃO DOS TOKENS
+   ========================================================================== */
+body {
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+}
+
+/* Cards e superfícies */
+.card,
+[class*="card"] {
+  background-color: var(--color-card);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-card);
+}
+
+/* Texto */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-text-primary);
+}
+
+p, span, div {
+  color: var(--color-text-primary);
+}
+
+/* Bordas */
+[class*="border"] {
+  border-color: var(--color-border);
+}
+
+/* Inputs e formulários */
+input,
+textarea,
+select {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  border-color: var(--color-border);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* Hover states */
+input:hover,
+textarea:hover,
+select:hover {
+  border-color: var(--color-border);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--primary);
+  background-color: var(--color-surface);
+}

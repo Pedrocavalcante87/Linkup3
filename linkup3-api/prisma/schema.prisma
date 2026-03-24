@@ -1,0 +1,141 @@
+// Schema do banco de dados do LinkUp³
+// Cada "model" vira uma tabela no SQLite
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────
+// USUÁRIOS — quem vai logar no sistema
+// ─────────────────────────────────────────────
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  nome      String
+  senha     String   // sempre armazenada com bcrypt (hash), NUNCA em texto puro
+  role      String   @default("user") // admin | user | analyst
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tickets      Ticket[]
+  notificacoes Notificacao[]
+}
+
+// ─────────────────────────────────────────────
+// INTEGRAÇÕES — os sistemas monitorados
+// ─────────────────────────────────────────────
+model Integracao {
+  id          String   @id @default(cuid())
+  nome        String
+  descricao   String?
+  status      String   @default("ok") // ok | warn | error
+  uptime      Float    @default(100)
+  taxaSucesso Float    @default(100)
+  origem      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  tickets Ticket[]
+  logs    Log[]
+}
+
+// ─────────────────────────────────────────────
+// TICKETS — chamados de suporte
+// ─────────────────────────────────────────────
+model Ticket {
+  id           String   @id @default(cuid())
+  titulo       String
+  descricao    String?
+  status       String   @default("aberto") // aberto | em_andamento | resolvido
+  prioridade   String   @default("media")  // baixa | media | alta
+  origem       String?  // manual | automatico
+  integracaoId String?
+  userId       String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  integracao Integracao? @relation(fields: [integracaoId], references: [id])
+  user       User?       @relation(fields: [userId], references: [id])
+}
+
+// ─────────────────────────────────────────────
+// LOGS — registro de eventos do sistema
+// ─────────────────────────────────────────────
+model Log {
+  id           String   @id @default(cuid())
+  nivel        String   // INFO | WARN | ERROR
+  mensagem     String
+  modulo       String?
+  integracaoId String?
+  createdAt    DateTime @default(now())
+
+  integracao Integracao? @relation(fields: [integracaoId], references: [id])
+}
+
+// ─────────────────────────────────────────────
+// NOTIFICAÇÕES — alertas por usuário
+// ─────────────────────────────────────────────
+model Notificacao {
+  id        String   @id @default(cuid())
+  titulo    String
+  mensagem  String?
+  tipo      String   @default("info") // info | success | warning | error
+  lida      Boolean  @default(false)
+  userId    String?
+  createdAt DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id])
+}
+
+// ─────────────────────────────────────────────
+// FATURAS — gestão financeira
+// ─────────────────────────────────────────────
+model Fatura {
+  id             String   @id @default(cuid())
+  descricao      String
+  valor          Float
+  status         String   @default("open") // open | paid | overdue
+  dataVencimento DateTime
+  clienteNome    String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  registros RegistroOperacional[]
+}
+
+// ─────────────────────────────────────────────
+// REGISTROS OPERACIONAIS — dados reconciliados
+// ─────────────────────────────────────────────
+model RegistroOperacional {
+  id             String   @id @default(cuid())
+  descricao      String
+  valor          Float    @default(0)
+  inconsistencia Boolean  @default(false)
+  severidade     String   @default("media") // alta | media | baixa
+  faturaId       String?
+  createdAt      DateTime @default(now())
+
+  fatura Fatura? @relation(fields: [faturaId], references: [id])
+}
+
+// ─────────────────────────────────────────────
+// AUTOMAÇÕES — regras trigger → ação
+// ─────────────────────────────────────────────
+model Automacao {
+  id              String   @id @default(cuid())
+  nome            String
+  descricao       String?
+  enabled         Boolean  @default(true)
+  triggerType     String   // fatura_atrasada | integracao_falha | log_error
+  triggerCondicao String?  // JSON: ex. {"dias": 7}
+  actionType      String   // criar_ticket | disparar_notificacao | criar_registro
+  actionData      String?  // JSON: ex. {"prioridade": "alta"}
+  executionCount  Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+	.card {
+		@apply rounded-xl p-6;
+		background-color: var(--color-card);
+		border: 1px solid var(--color-border);
+		box-shadow: var(--shadow-card);
+	}
+    
+	.card-hover {
+		@apply transition-transform duration-250 hover:scale-[1.01];
+		transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+	}
+	.card-hover:hover {
+		box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+	}
+    
+	.btn-primary {
+		@apply font-semibold rounded-lg px-4 py-2 transition-colors;
+		background-color: var(--primary);
+		color: white;
+		box-shadow: var(--shadow-card);
+	}
+	.btn-primary:hover {
+		background-color: var(--primary-hover);
+	}
+	.btn-primary:focus-visible {
+		outline: 2px solid var(--primary);
+		outline-offset: 2px;
+	}
+    
+	.btn-ghost {
+		@apply text-neutral-700 hover:bg-neutral-100 rounded-lg px-4 py-2 transition-colors;
+	}
+    
+	.link {
+		@apply text-primary-600 hover:text-primary-700 underline-offset-4 hover:underline;
+	}
+	.table-header {
+		@apply bg-neutral-50 text-neutral-600 font-medium;
+	}
+    
+	.table-row {
+		@apply hover:bg-neutral-50 transition-colors;
+	}
+    
+	.section-title {
+		@apply text-xl font-semibold tracking-tight;
+		color: var(--color-text-primary);
+	}
+    
+	.section-subtitle {
+		@apply text-sm;
+		color: var(--color-text-secondary);
+	}
+    
+	.paragraph {
+		@apply text-sm;
+		color: var(--color-text-secondary);
+	}
+    
+}
+
+:root {
+	--primary: #003049;
+	--secondary: #669BBC;
+	--background: #F5F7FA;
+	--success: #4CAF50;
+	--warning: #F7B731;
+	--danger: #E63946;
+}
+
+html, body, #root {
+	height: 100%;
+}
+
+body {
+	@apply bg-neutral-50 text-neutral-800 font-sans;
+	letter-spacing: 0.01em;
+	line-height: 1.6;
+}
