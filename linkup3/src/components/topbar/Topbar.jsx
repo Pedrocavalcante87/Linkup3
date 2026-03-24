@@ -30,7 +30,7 @@ export default function Topbar({ currentUser, onLogout }) {
 
   return (
     <div
-      className="h-16 flex items-center justify-between px-6 sticky top-0 z-30"
+      className="h-16 flex items-center justify-between px-6 fixed top-0 right-0 left-0 lg:left-64 z-30"
       style={{
         backgroundColor: 'var(--color-surface)',
         borderBottom: '1px solid var(--color-border)'
