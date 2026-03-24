@@ -1,0 +1,9 @@
+{
+  "buildCommand": "cd linkup3 && npm install && npm run build",
+  "outputDirectory": "linkup3/dist",
+  "devCommand": "cd linkup3 && npm run dev",
+  "framework": "vite",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
