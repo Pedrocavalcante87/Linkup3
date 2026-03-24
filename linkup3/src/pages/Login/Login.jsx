@@ -192,7 +192,7 @@ export default function Login() {
             style={{ borderColor: 'var(--color-border)' }}
           >
             <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
-              Credenciais de teste: <span className="font-medium">admin@linkup.com</span> / <span className="font-medium">123456</span>
+              Credenciais de teste: <span className="font-medium">admin@linkup3.com</span> / <span className="font-medium">linkup3@2026</span>
             </p>
           </div>
         </div>
