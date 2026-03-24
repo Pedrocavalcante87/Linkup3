@@ -38,3 +38,4 @@ linkup3-api/prisma/dev.db-journal
 # Coverage
 coverage/
 .nyc_output/
+.vercel

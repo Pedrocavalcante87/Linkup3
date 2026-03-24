@@ -341,7 +341,6 @@ window.VALIDATE_SNAPSHOT = async function() {
   }
 
   // ✅ 3. Validar unicidade de IDs em integrações
-  const integracoes = snap.integracoes || [];
   const integracaoIds = integracoes.map(i => i.id).filter(Boolean);
   const integracaoIdsDuplicados = integracaoIds.filter((id, idx) => integracaoIds.indexOf(id) !== idx);
 
@@ -482,49 +481,6 @@ window.TEST_HELP = function() {
 ╚═══════════════════════════════════════════════════════════════
   `;
   console.info(help);
-};
-║                                                               ║
-║  📋 Listar integrações:                                       ║
-║     TEST_LIST_INTEGRATIONS()                                  ║
-║                                                               ║
-║  🔄 Teste de recuperação (ERROR → OK):                        ║
-║     TEST_RESTORE('int-001')              // Single            ║
-║     TEST_RESTORE(['int-002','int-003'])  // Multiple          ║
-║                                                               ║
-║  📉 Teste de degradação (OK → WARN → ERROR):                  ║
-║     TEST_DEGRADE('int-001')              // Single            ║
-║     TEST_DEGRADE(['int-002','int-003'])  // Multiple          ║
-║                                                               ║
-║  🔁 Ciclo completo (OK → ERROR → OK):                         ║
-║     TEST_FULL_CYCLE('int-001')           // Single            ║
-║     TEST_FULL_CYCLE(['int-002','int-003']) // Multiple        ║
-║                                                               ║
-║  🔴 Múltiplos erros simultâneos:                              ║
-║     TEST_MULTIPLE_ERRORS()                                    ║
-║                                                               ║
-║  🔔 Testar notificações de recovery:                          ║
-║     TEST_RECOVERY_NOTIFICATIONS('id_integracao')              ║
-║                                                               ║
-║  🤖 Testar análise de IA:                                     ║
-║     TEST_AI_RECOVERY('id_integracao')                         ║
-║                                                               ║
-║  ♻️  Resetar tudo para OK:                                     ║
-║     TEST_RESET_ALL()                                          ║
-║                                                               ║
-║  � VALIDAÇÃO DE SNAPSHOT (NOVO):                             ║
-║     VALIDATE_SNAPSHOT()              // Validação única       ║
-║     START_SNAPSHOT_MONITOR()         // Monitora a cada 15s   ║
-║     STOP_SNAPSHOT_MONITOR()          // Para monitor          ║
-║                                                               ║
-║  💡 Dicas:                                                    ║
-║     • Todos os testes aceitam IDs únicos ou arrays            ║
-║     • Use TEST_LIST_INTEGRATIONS() para ver IDs disponíveis   ║
-║     • Execute VALIDATE_SNAPSHOT() após testes pesados         ║
-║     • Veja as animações na página de Integrações              ║
-║     • Verifique logs, notificações e sidebar                  ║
-║                                                               ║
-╚═══════════════════════════════════════════════════════════════╝
-  `);
 };
 
 // Sistema de testes carregado
